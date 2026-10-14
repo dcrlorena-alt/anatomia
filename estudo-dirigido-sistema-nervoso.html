@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudo Dirigido — Sistema Nervoso</title>
+<style>
+  :root{
+    --rosa:#E5185F;
+    --azul:#23366F;
+    --verde:#2E9E5B;
+    --cinza:#f4f5f8;
+    --borda:#d7dbe6;
+    --txt:#1f2430;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    color:var(--txt);margin:0;background:#e9ebf1;line-height:1.5;
+  }
+  .folha{
+    max-width:900px;margin:24px auto;background:#fff;
+    padding:40px 48px 56px;box-shadow:0 6px 24px rgba(0,0,0,.12);border-radius:6px;
+  }
+  header.capa{border-bottom:5px solid var(--rosa);padding-bottom:18px;margin-bottom:22px;}
+  .selo{display:inline-block;background:var(--azul);color:#fff;font-size:.72rem;letter-spacing:.14em;
+    font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;}
+  header.capa h1{color:var(--azul);font-size:2rem;margin:12px 0 2px;line-height:1.15;}
+  header.capa h2{color:var(--rosa);font-size:1.15rem;margin:0;font-weight:600;}
+  .meta{margin-top:14px;font-size:.92rem;color:#4a5063;}
+  .meta strong{color:var(--azul);}
+  .identificacao{display:flex;flex-wrap:wrap;gap:14px 26px;margin-top:16px;font-size:.95rem;}
+  .campo{flex:1 1 220px;display:flex;align-items:baseline;gap:8px;}
+
+  /* ---- Campos editáveis ---- */
+  input.in,textarea.in{
+    font:inherit;color:var(--azul);font-weight:600;
+    background:#fffdf3;border:none;border-bottom:1.5px solid #8a90a3;
+    padding:3px 6px;width:100%;border-radius:3px 3px 0 0;
+  }
+  input.in:focus,textarea.in:focus{outline:none;background:#fff7d6;border-bottom-color:var(--rosa);}
+  textarea.in{border:1.5px solid var(--borda);border-radius:6px;min-height:52px;resize:vertical;}
+  input.lac{display:inline-block;width:170px;}
+  input.par{width:52px;text-align:center;font-weight:700;}
+  input.mini{width:60px;text-align:center;}
+  input.med{width:150px;}
+
+  .box{border:1px solid var(--borda);border-radius:8px;padding:16px 20px;margin:18px 0;background:var(--cinza);}
+  .box.objetivos{border-left:6px solid var(--verde);}
+  .box.como{border-left:6px solid var(--azul);background:#eef1f8;}
+  .box h3{margin:0 0 8px;color:var(--azul);font-size:1.05rem;}
+  .box ul{margin:6px 0 0;padding-left:20px;}
+  .box li{margin:4px 0;}
+
+  section{margin:34px 0 10px;}
+  .tema{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .num{flex:0 0 auto;width:38px;height:38px;background:var(--rosa);color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;}
+  .tema h3{margin:0;color:var(--azul);font-size:1.25rem;border-bottom:2px solid var(--verde);
+    padding-bottom:4px;flex:1;}
+
+  .resumo{font-size:.9rem;background:#fff8fb;border:1px dashed var(--rosa);border-radius:6px;
+    padding:10px 14px;margin:10px 0 16px;color:#5a4350;}
+  .resumo b{color:var(--rosa);}
+
+  .q{margin:14px 0;}
+  .q > p{margin:0 0 6px;}
+  .q .enun{font-weight:600;}
+  .q .enun .qid{color:var(--rosa);}
+
+  .alts{list-style:none;margin:6px 0 0;padding-left:4px;}
+  .alts li{margin:4px 0;}
+  .alts label{cursor:pointer;display:inline-flex;align-items:center;gap:8px;}
+
+  .vf-list{list-style:none;margin:6px 0 0;padding:0;}
+  .vf-list li{margin:7px 0;display:flex;gap:10px;align-items:center;}
+  .vf{display:inline-flex;gap:10px;flex:0 0 auto;}
+  .vf label{cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--azul);}
+
+  table.assoc{width:100%;border-collapse:collapse;margin-top:8px;font-size:.92rem;}
+  table.assoc td{border:1px solid var(--borda);padding:7px 10px;vertical-align:middle;}
+  table.assoc .colA{width:40%;background:#eef1f8;}
+  table.assoc .colA b{color:var(--azul);}
+
+  .resp{margin-top:6px;}
+
+  .rotular{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:8px;font-size:.92rem;}
+  .rotular span{flex:0 0 46%;display:flex;align-items:baseline;gap:8px;}
+
+  .banco{background:#eef9f1;border:1px solid #bfe3cb;border-radius:6px;padding:10px 14px;
+    font-size:.88rem;margin-top:8px;}
+  .banco b{color:var(--verde);}
+
+  footer{margin-top:40px;padding-top:14px;border-top:2px solid var(--borda);
+    font-size:.8rem;color:#7a8097;text-align:center;}
+
+  .toolbar{max-width:900px;margin:16px auto 0;text-align:right;display:flex;gap:10px;justify-content:flex-end;}
+  .toolbar button{border:none;padding:9px 18px;border-radius:6px;cursor:pointer;font-size:.9rem;font-weight:600;color:#fff;}
+  .btn-print{background:var(--azul);}
+  .btn-print:hover{background:#17244d;}
+  .btn-clear{background:#8a90a3;}
+  .btn-clear:hover{background:#6f7589;}
+  .aviso-save{max-width:900px;margin:6px auto 0;text-align:right;font-size:.76rem;color:#7a8097;}
+
+  @media print{
+    body{background:#fff;}
+    .folha{box-shadow:none;margin:0;max-width:none;padding:0 6mm;border-radius:0;}
+    .toolbar,.aviso-save{display:none;}
+    .quebra{page-break-before:always;}
+    section{page-break-inside:avoid;}
+    .q{page-break-inside:avoid;}
+    table.assoc{page-break-inside:avoid;}
+    input.in,textarea.in{background:#fff !important;border-color:#8a90a3 !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="btn-clear" onclick="limparRespostas()">🧹 Limpar respostas</button>
+  <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button>
+</div>
+<div class="aviso-save">💾 As respostas são salvas automaticamente neste navegador.</div>
+
+<div class="folha">
+
+  <header class="capa">
+    <span class="selo">Anatomia Humana • Aula 6</span>
+    <h1>Estudo Dirigido — Sistema Nervoso</h1>
+    <h2>Da célula nervosa à organização do sistema</h2>
+    <div class="meta"><strong>Profª. Me. Dayanne Ayres</strong> &nbsp;•&nbsp; Atividade para desenvolver em sala</div>
+    <div class="identificacao">
+      <div class="campo">Nome: <input class="in" type="text"></div>
+      <div class="campo">Turma: <input class="in" type="text"></div>
+      <div class="campo">Data: <input class="in" type="text"></div>
+    </div>
+  </header>
+
+  <div class="box objetivos">
+    <h3>🎯 Objetivos de aprendizagem</h3>
+    <ul>
+      <li>Reconhecer as funções do sistema nervoso e os tipos de células do tecido nervoso.</li>
+      <li>Identificar as partes do neurônio e os tipos de neurônios (quanto à forma e à função).</li>
+      <li>Compreender a sinapse, os neurotransmissores e o papel das células da glia.</li>
+      <li>Descrever as camadas de proteção do encéfalo e a divisão anatômica e funcional do sistema nervoso.</li>
+      <li>Localizar e relacionar as estruturas do SNC (encéfalo e medula) e do SNP (nervos, gânglios).</li>
+    </ul>
+  </div>
+
+  <div class="box como">
+    <h3>📝 Como realizar</h3>
+    <ul>
+      <li>Responda digitando nos campos. Pode consultar o material da aula.</li>
+      <li>Nas questões discursivas, use frases completas e os termos técnicos corretos.</li>
+      <li>Ao terminar, clique em <b>Imprimir / Salvar em PDF</b> para entregar.</li>
+    </ul>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <div class="tema"><div class="num">1</div><h3>Funções e visão geral</h3></div>
+    <div class="resumo">O sistema nervoso <b>transmite sinais</b> entre as partes do corpo e coordena ações <b>voluntárias e involuntárias</b>. Possui função <b>sensitiva</b> (capta estímulos), <b>integradora</b> (processa/interpreta) e <b>motora</b> (gera a resposta).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">1.1</span> Complete com as funções do sistema nervoso:</p>
+      <p>a) Função <input class="in lac" type="text">: os nervos captam informações do meio interno e externo e as conduzem ao SNC.</p>
+      <p>b) Função <input class="in lac" type="text">: a informação trazida ao SNC é processada e interpretada.</p>
+      <p>c) Função <input class="in lac" type="text">: conduz a informação do SNC em direção aos músculos e às glândulas.</p>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">1.2</span> Diferencie <b>função primordial</b> e <b>função adaptativa</b> do sistema nervoso, dando um exemplo de função adaptativa.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="tema"><div class="num">2</div><h3>Células do tecido nervoso: o neurônio</h3></div>
+    <div class="resumo">O neurônio <b>conduz o impulso nervoso</b>. Partes principais: <b>dendritos</b> (recepção), <b>corpo celular</b> (integração, contém o núcleo) e <b>axônio</b> (transmissão).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">2.1</span> Associe cada parte do neurônio à sua função (escreva o algarismo romano no parêntese):</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Dendritos</td><td><input class="in par" type="text"> parte mais volumosa; faz a <b>integração</b> e contém o núcleo.</td></tr>
+        <tr><td class="colA"><b>II.</b> Corpo celular</td><td><input class="in par" type="text"> prolongamento que <b>transmite</b> os impulsos para outras células.</td></tr>
+        <tr><td class="colA"><b>III.</b> Axônio</td><td><input class="in par" type="text"> prolongamentos ramificados; parte <b>receptora</b> do neurônio.</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">2.2</span> Nomeie as estruturas do neurônio (use o banco de palavras):</p>
+      <div class="rotular">
+        <span>1. <input class="in" type="text"></span>
+        <span>2. <input class="in" type="text"></span>
+        <span>3. <input class="in" type="text"></span>
+        <span>4. <input class="in" type="text"></span>
+        <span>5. <input class="in" type="text"></span>
+      </div>
+      <div class="banco"><b>Banco:</b> corpo celular • dendrito • axônio • bainha de mielina • nó de Ranvier</div>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">2.3</span> Aproximadamente quantos neurônios possui o corpo de um ser humano adulto?</p>
+      <ul class="alts">
+        <li><label><input type="radio" name="q2_3"> 85 milhões</label></li>
+        <li><label><input type="radio" name="q2_3"> 8,5 bilhões</label></li>
+        <li><label><input type="radio" name="q2_3"> 85 bilhões</label></li>
+        <li><label><input type="radio" name="q2_3"> 850 bilhões</label></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <div class="tema"><div class="num">3</div><h3>Sinapse e neurotransmissores</h3></div>
+    <div class="resumo">A <b>sinapse</b> é o local de contato entre dois neurônios. A transferência do impulso ocorre pelos <b>neurotransmissores</b>, armazenados em <b>vesículas sinápticas</b> nas extremidades dos axônios.</div>
+    <div class="q">
+      <p class="enun"><span class="qid">3.1</span> O que é uma sinapse e por que os neurotransmissores são essenciais nela?</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="tema"><div class="num">4</div><h3>Tipos de neurônios</h3></div>
+    <div class="resumo">Quanto à <b>forma</b>: unipolar, bipolar, pseudounipolar e multipolar (a maioria). Quanto à <b>função</b>: sensitivo (aferente), motor (eferente) e interneurônio.</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">4.1</span> Associe o tipo de neurônio (forma) à descrição:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Unipolar</td><td><input class="in par" type="text"> um dendrito e um axônio.</td></tr>
+        <tr><td class="colA"><b>II.</b> Bipolar</td><td><input class="in par" type="text"> apenas um axônio.</td></tr>
+        <tr><td class="colA"><b>III.</b> Pseudounipolar</td><td><input class="in par" type="text"> mais de dois prolongamentos; a maioria dos neurônios.</td></tr>
+        <tr><td class="colA"><b>IV.</b> Multipolar</td><td><input class="in par" type="text"> um único prolongamento que depois se divide em dois ramos.</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">4.2</span> Classifique quanto à <b>função</b> (<i>aferente</i> ou <i>eferente</i>):</p>
+      <p>a) Neurônio <b>sensitivo</b>: conduz da periferia ao SNC → <input class="in lac" type="text">.</p>
+      <p>b) Neurônio <b>motor</b>: conduz do SNC à periferia → <input class="in lac" type="text">.</p>
+      <p>c) O <input class="in lac" type="text"> conecta um neurônio a outro e é encontrado no SNC.</p>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <div class="tema"><div class="num">5</div><h3>Células da glia (gliais)</h3></div>
+    <div class="resumo">Ocupam os espaços entre os neurônios; fazem <b>sustentação, revestimento, isolamento</b> e modulação. São cerca de <b>10x mais numerosas</b> que os neurônios no cérebro.</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">5.1</span> Associe o tipo de célula glial à sua função:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Astrócitos</td><td><input class="in par" type="text"> enrolam-se sobre os axônios formando envoltórios isolantes.</td></tr>
+        <tr><td class="colA"><b>II.</b> Oligodendrócitos e células de Schwann</td><td><input class="in par" type="text"> dispõem-se ao longo dos capilares do encéfalo, controlando a passagem de substâncias do sangue para o sistema nervoso.</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">5.2</span> Explique por que as células da glia são importantes mesmo <b>não conduzindo</b> impulsos nervosos.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <div class="quebra"></div>
+
+  <!-- 6 -->
+  <section>
+    <div class="tema"><div class="num">6</div><h3>Proteção do sistema nervoso central</h3></div>
+    <div class="resumo">Três níveis: <b>óssea</b> (crânio e canal vertebral), <b>membranácea</b> (meninges: dura-máter, aracnoide e pia-máter) e <b>líquida</b> (líquido cerebroespinhal).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">6.1</span> Ordene as meninges da <b>mais externa</b> para a <b>mais interna</b>:</p>
+      <div class="resp"><input class="in" type="text"></div>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">6.2</span> Marque <b>V</b> para verdadeiro e <b>F</b> para falso:</p>
+      <ul class="vf-list">
+        <li><span class="vf"><label><input type="radio" name="q6_2a" value="V">V</label><label><input type="radio" name="q6_2a" value="F">F</label></span> A dura-máter é a mais espessa e envolve a medula como uma luva (saco dural).</li>
+        <li><span class="vf"><label><input type="radio" name="q6_2b" value="V">V</label><label><input type="radio" name="q6_2b" value="F">F</label></span> A pia-máter é a meninge mais externa e espessa.</li>
+        <li><span class="vf"><label><input type="radio" name="q6_2c" value="V">V</label><label><input type="radio" name="q6_2c" value="F">F</label></span> O líquido cerebroespinhal tem função de absorção de choques.</li>
+        <li><span class="vf"><label><input type="radio" name="q6_2d" value="V">V</label><label><input type="radio" name="q6_2d" value="F">F</label></span> A aracnoide dispõe-se entre a dura-máter e a pia-máter.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <div class="tema"><div class="num">7</div><h3>Divisão do sistema nervoso</h3></div>
+    <div class="resumo">Divide-se em <b>SNC</b> (encéfalo + medula) e <b>SNP</b>. O SNP tem o sistema <b>somático</b> (voluntário) e o <b>autônomo</b> (involuntário: simpático e parassimpático).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">7.1</span> Complete o organograma:</p>
+      <p><b>SNC</b>: <input class="in lac" type="text"> e <input class="in lac" type="text">.</p>
+      <p><b>SNP</b>: sistema nervoso <input class="in lac" type="text"> (voluntário) e sistema nervoso <input class="in lac" type="text"> (involuntário).</p>
+      <p>O sistema nervoso autônomo subdivide-se em <input class="in lac" type="text"> e <input class="in lac" type="text">.</p>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">7.2</span> Qual divisão (somático ou autônomo) controla os músculos lisos dos órgãos internos e as glândulas, independentemente da vontade? Justifique.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section>
+    <div class="tema"><div class="num">8</div><h3>SNC — Encéfalo</h3></div>
+    <div class="resumo">No crânio. <b>Lobos</b> têm funções distintas; <b>telencéfalo</b> = maior porção; <b>diencéfalo</b> = tálamo, hipotálamo, epitálamo, subtálamo; <b>tronco</b> = mesencéfalo, ponte e bulbo; <b>cerebelo</b> = coordenação.</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">8.1</span> Associe cada lobo à sua função principal:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Lobo frontal</td><td><input class="in par" type="text"> visão e reconhecimento de tamanho, formato e cor.</td></tr>
+        <tr><td class="colA"><b>II.</b> Lobo occipital</td><td><input class="in par" type="text"> comportamento, audição e compreensão da linguagem.</td></tr>
+        <tr><td class="colA"><b>III.</b> Lobo parietal</td><td><input class="in par" type="text"> personalidade, motricidade e expressão da fala.</td></tr>
+        <tr><td class="colA"><b>IV.</b> Lobo temporal</td><td><input class="in par" type="text"> leitura e sensibilidade (grosseira e fina).</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">8.2</span> Associe as estruturas do <b>diencéfalo</b> às funções:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Tálamo</td><td><input class="in par" type="text"> controle do SNA, temperatura, sono, fome, sede e sistema endócrino.</td></tr>
+        <tr><td class="colA"><b>II.</b> Hipotálamo</td><td><input class="in par" type="text"> sensibilidade, motricidade, alerta/vigília e ativação do córtex.</td></tr>
+        <tr><td class="colA"><b>III.</b> Epitálamo</td><td><input class="in par" type="text"> movimentos e coordenação da motricidade.</td></tr>
+        <tr><td class="colA"><b>IV.</b> Subtálamo</td><td><input class="in par" type="text"> regulação do comportamento emocional.</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">8.3</span> O <b>tronco encefálico</b> (mesencéfalo, ponte e bulbo). Relacione:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Mesencéfalo</td><td><input class="in par" type="text"> estrutura de ligação.</td></tr>
+        <tr><td class="colA"><b>II.</b> Ponte</td><td><input class="in par" type="text"> controle automático da respiração e frequência cardíaca.</td></tr>
+        <tr><td class="colA"><b>III.</b> Bulbo</td><td><input class="in par" type="text"> reflexos visuais.</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">8.4</span> Qual estrutura é responsável pela <b>coordenação muscular, tônus e postura</b>?</p>
+      <ul class="alts">
+        <li><label><input type="radio" name="q8_4"> Telencéfalo</label></li>
+        <li><label><input type="radio" name="q8_4"> Cerebelo</label></li>
+        <li><label><input type="radio" name="q8_4"> Bulbo</label></li>
+        <li><label><input type="radio" name="q8_4"> Tálamo</label></li>
+      </ul>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">8.5</span> Diferencie <b>áreas de projeção (primárias)</b> das <b>áreas de associação</b> do córtex cerebral.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <div class="quebra"></div>
+
+  <!-- 9 -->
+  <section>
+    <div class="tema"><div class="num">9</div><h3>SNC — Medula espinhal</h3></div>
+    <div class="resumo">Dentro do <b>canal vertebral</b>, continua o bulbo até o cone medular (~45 cm). <b>Substância cinzenta</b> em H (corpos celulares); <b>substância branca</b> com fibras ascendentes e descendentes.</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">9.1</span> Complete sobre a substância cinzenta (forma de H):</p>
+      <p>a) Corno <b>posterior</b> → impulso nervoso <input class="in lac" type="text">.</p>
+      <p>b) Corno <b>anterior</b> → impulso nervoso <input class="in lac" type="text">.</p>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">9.2</span> A medula consegue elaborar respostas rápidas em emergências <b>sem</b> a interferência do encéfalo? Explique o que isso significa.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section>
+    <div class="tema"><div class="num">10</div><h3>Sistema Nervoso Periférico — nervos e gânglios</h3></div>
+    <div class="resumo">Maior parte do SN <b>fora</b> do canal vertebral: <b>nervos</b>, <b>gânglios</b> e <b>terminações</b>. Nervos cranianos: <b>12 pares</b>; espinhais: <b>31 pares</b> (mistos).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.1</span> Classifique as fibras quanto à função:</p>
+      <p>a) Fibras <b>sensitivas</b> (<input class="in lac" type="text">): da periferia para o SNC.</p>
+      <p>b) Fibras <b>motoras</b> (<input class="in lac" type="text">): do SNC para músculos/órgãos.</p>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.2</span> Classifique cada nervo craniano em <b>S</b> (sensitivo), <b>M</b> (motor) ou <b>Mi</b> (misto):</p>
+      <div class="rotular">
+        <span>I — Olfatório: <input class="in mini" type="text"></span>
+        <span>II — Óptico: <input class="in mini" type="text"></span>
+        <span>III — Oculomotor: <input class="in mini" type="text"></span>
+        <span>IV — Troclear: <input class="in mini" type="text"></span>
+        <span>V — Trigêmeo: <input class="in mini" type="text"></span>
+        <span>VI — Abducente: <input class="in mini" type="text"></span>
+        <span>VII — Facial: <input class="in mini" type="text"></span>
+        <span>VIII — Vestibulococlear: <input class="in mini" type="text"></span>
+        <span>IX — Glossofaríngeo: <input class="in mini" type="text"></span>
+        <span>X — Vago: <input class="in mini" type="text"></span>
+        <span>XI — Acessório: <input class="in mini" type="text"></span>
+        <span>XII — Hipoglosso: <input class="in mini" type="text"></span>
+      </div>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.3</span> Complete a quantidade de nervos espinhais por segmento:</p>
+      <p><input class="in mini" type="text"> cervicais &nbsp;•&nbsp; <input class="in mini" type="text"> torácicos &nbsp;•&nbsp; <input class="in mini" type="text"> lombares &nbsp;•&nbsp; <input class="in mini" type="text"> sacrais &nbsp;•&nbsp; <input class="in mini" type="text"> coccígeo</p>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.4</span> Por que existem <b>8</b> pares de nervos cervicais, se há apenas <b>7</b> vértebras cervicais?</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.5</span> Relacione as raízes dos nervos espinhais às fibras:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>I.</b> Raiz ventral</td><td><input class="in par" type="text"> fibras sensitivas (aferentes).</td></tr>
+        <tr><td class="colA"><b>II.</b> Raiz dorsal</td><td><input class="in par" type="text"> fibras motoras (eferentes).</td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">10.6</span> O que é um <b>gânglio nervoso</b> e onde se localiza em relação ao SNC?</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section>
+    <div class="tema"><div class="num">11</div><h3>Sistema Nervoso Autônomo (SNA)</h3></div>
+    <div class="resumo">Sistema <b>neurovegetativo/visceral</b>: controla a vida vegetativa (respiração, circulação, digestão). Divide-se em <b>simpático</b> (acelera — noradrenalina) e <b>parassimpático</b> (desacelera — acetilcolina).</div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">11.1</span> Complete o quadro comparativo:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>Simpático</b></td><td>Efeito: <input class="in med" type="text"> &nbsp;|&nbsp; Neurotransmissor: <input class="in med" type="text"></td></tr>
+        <tr><td class="colA"><b>Parassimpático</b></td><td>Efeito: <input class="in med" type="text"> &nbsp;|&nbsp; Neurotransmissor: <input class="in med" type="text"></td></tr>
+      </table>
+    </div>
+
+    <div class="q">
+      <p class="enun"><span class="qid">11.2</span> Dê um exemplo de situação em que o <b>simpático</b> é ativado e descreva uma reação do corpo.</p>
+      <div class="resp"><textarea class="in"></textarea></div>
+    </div>
+  </section>
+
+  <!-- desafio -->
+  <section>
+    <div class="tema"><div class="num">★</div><h3>Questão-desafio (síntese)</h3></div>
+    <div class="q">
+      <p class="enun">Você encosta a mão sem querer em uma superfície muito quente e a retira rapidamente. Descreva o <b>caminho do impulso nervoso</b>: receptor/periferia, tipo de fibra que leva a informação ao SNC, papel da medula na resposta rápida e a fibra que leva a ordem de volta ao músculo.</p>
+      <div class="resp"><textarea class="in" style="min-height:90px;"></textarea></div>
+    </div>
+  </section>
+
+  <footer>
+    Estudo Dirigido — Sistema Nervoso • Anatomia Humana (Aula 6) • Profª. Me. Dayanne Ayres<br>
+    Elaborado a partir do material da aula para uso em sala.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY='estudo_dirigido_sn_v1';
+  var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+  var fields=document.querySelectorAll('input, textarea');
+  function persist(){ localStorage.setItem(KEY, JSON.stringify(saved)); }
+  fields.forEach(function(f,i){
+    if(f.type==='radio'){
+      if(saved[f.name]!==undefined && f.value===saved[f.name]) f.checked=true;
+      f.addEventListener('change',function(){ saved[f.name]=f.value; persist(); });
+    }else{
+      var k='f'+i;
+      if(saved[k]!==undefined) f.value=saved[k];
+      f.addEventListener('input',function(){ saved[k]=f.value; persist(); });
+    }
+  });
+  window.limparRespostas=function(){
+    if(!confirm('Deseja apagar todas as respostas digitadas?')) return;
+    document.querySelectorAll('input, textarea').forEach(function(f){
+      if(f.type==='radio') f.checked=false; else f.value='';
+    });
+    saved={}; localStorage.removeItem(KEY);
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atividade com Imagens — Sistema Nervoso</title>
+<style>
+  :root{
+    --rosa:#E5185F;
+    --azul:#23366F;
+    --verde:#2E9E5B;
+    --cinza:#f4f5f8;
+    --borda:#d7dbe6;
+    --txt:#1f2430;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    color:var(--txt);margin:0;background:#e9ebf1;line-height:1.5;
+  }
+  .folha{
+    max-width:920px;margin:24px auto;background:#fff;
+    padding:40px 48px 56px;box-shadow:0 6px 24px rgba(0,0,0,.12);border-radius:6px;
+  }
+  header.capa{border-bottom:5px solid var(--rosa);padding-bottom:18px;margin-bottom:22px;}
+  .selo{display:inline-block;background:var(--azul);color:#fff;font-size:.72rem;letter-spacing:.14em;
+    font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;}
+  header.capa h1{color:var(--azul);font-size:2rem;margin:12px 0 2px;line-height:1.15;}
+  header.capa h2{color:var(--rosa);font-size:1.15rem;margin:0;font-weight:600;}
+  .meta{margin-top:14px;font-size:.92rem;color:#4a5063;}
+  .meta strong{color:var(--azul);}
+  .identificacao{display:flex;flex-wrap:wrap;gap:14px 26px;margin-top:16px;font-size:.95rem;}
+  .campo{flex:1 1 220px;display:flex;align-items:baseline;gap:8px;}
+
+  /* ---- Campos editáveis ---- */
+  input.in,textarea.in{
+    font:inherit;color:var(--azul);font-weight:600;
+    background:#fffdf3;border:none;border-bottom:1.5px solid #8a90a3;
+    padding:3px 6px;width:100%;border-radius:3px 3px 0 0;
+  }
+  input.in:focus,textarea.in:focus{
+    outline:none;background:#fff7d6;border-bottom-color:var(--rosa);
+  }
+  textarea.in{
+    border:1.5px solid var(--borda);border-radius:6px;min-height:52px;
+    resize:vertical;background:#fffdf3;width:100%;
+  }
+  input.mini{width:70px;text-align:center;}
+  input.med{width:160px;}
+
+  .box.como{border:1px solid var(--borda);border-left:6px solid var(--azul);
+    border-radius:8px;padding:14px 20px;margin:18px 0;background:#eef1f8;}
+  .box.como h3{margin:0 0 8px;color:var(--azul);font-size:1.05rem;}
+  .box.como ul{margin:6px 0 0;padding-left:20px;}
+
+  section{margin:34px 0 10px;}
+  .tema{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .num{flex:0 0 auto;width:38px;height:38px;background:var(--rosa);color:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;}
+  .tema h3{margin:0;color:var(--azul);font-size:1.25rem;border-bottom:2px solid var(--verde);
+    padding-bottom:4px;flex:1;}
+  .instr{font-size:.93rem;margin:0 0 10px;color:#444a5c;}
+
+  .fig{
+    border:1px solid var(--borda);border-radius:10px;background:#fcfcfe;
+    padding:14px;text-align:center;margin-bottom:12px;
+  }
+  .fig svg{max-width:100%;height:auto;}
+  .legenda-fig{font-size:.78rem;color:#8a90a3;margin-top:6px;font-style:italic;}
+
+  .respostas{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:4px;}
+  .respostas .item{flex:1 1 44%;font-size:.95rem;display:flex;gap:8px;align-items:center;}
+  .respostas .bolinha{
+    display:inline-flex;flex:0 0 auto;width:22px;height:22px;border-radius:50%;
+    background:var(--azul);color:#fff;font-size:.8rem;font-weight:700;
+    align-items:center;justify-content:center;
+  }
+
+  .banco{background:#eef9f1;border:1px solid #bfe3cb;border-radius:6px;
+    padding:10px 14px;font-size:.86rem;margin:12px 0 2px;}
+  .banco b{color:var(--verde);}
+
+  table.assoc{width:100%;border-collapse:collapse;margin-top:8px;font-size:.92rem;}
+  table.assoc td{border:1px solid var(--borda);padding:7px 10px;vertical-align:middle;}
+  table.assoc .colA{width:52%;background:#eef1f8;}
+  table.assoc .colA b{color:var(--azul);}
+
+  .pergunta{margin:12px 0;}
+  .pergunta .en{font-weight:600;margin-bottom:6px;}
+  .pergunta .en .qid{color:var(--rosa);}
+
+  .legenda-cores{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0;font-size:.85rem;}
+
+  footer{margin-top:40px;padding-top:14px;border-top:2px solid var(--borda);
+    font-size:.8rem;color:#7a8097;text-align:center;}
+
+  .toolbar{max-width:920px;margin:16px auto 0;text-align:right;display:flex;gap:10px;justify-content:flex-end;}
+  .toolbar button{border:none;padding:9px 18px;border-radius:6px;
+    cursor:pointer;font-size:.9rem;font-weight:600;color:#fff;}
+  .btn-print{background:var(--azul);}
+  .btn-print:hover{background:#17244d;}
+  .btn-clear{background:#8a90a3;}
+  .btn-clear:hover{background:#6f7589;}
+  .aviso-save{max-width:920px;margin:6px auto 0;text-align:right;font-size:.76rem;color:#7a8097;}
+
+  /* SVG rótulos */
+  .lbl{font:700 15px "Segoe UI",Arial,sans-serif;}
+  .lbl-c{fill:#fff;}
+  .lead{stroke:#23366F;stroke-width:1.5;fill:none;}
+  .dot{fill:#23366F;}
+
+  @media print{
+    body{background:#fff;}
+    .folha{box-shadow:none;margin:0;max-width:none;padding:0 6mm;border-radius:0;}
+    .toolbar{display:none;}
+    .quebra{page-break-before:always;}
+    section{page-break-inside:avoid;}
+    .fig{page-break-inside:avoid;}
+    input.in,textarea.in{background:#fff !important;border-color:#8a90a3 !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button class="btn-clear" onclick="limparRespostas()">🧹 Limpar respostas</button>
+  <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Salvar em PDF</button>
+</div>
+<div class="aviso-save">💾 As respostas são salvas automaticamente neste navegador.</div>
+
+<div class="folha">
+
+  <header class="capa">
+    <span class="selo">Anatomia Humana • Aula 6</span>
+    <h1>Atividade com Imagens — Sistema Nervoso</h1>
+    <h2>Identifique e nomeie as estruturas</h2>
+    <div class="meta"><strong>Profª. Me. Dayanne Ayres</strong> &nbsp;•&nbsp; Atividade para desenvolver em sala</div>
+    <div class="identificacao">
+      <div class="campo">Nome: <input class="in" type="text"></div>
+      <div class="campo">Turma: <input class="in" type="text"></div>
+      <div class="campo">Data: <input class="in" type="text"></div>
+    </div>
+  </header>
+
+  <div class="box como">
+    <h3>📝 Como realizar</h3>
+    <ul>
+      <li>Observe cada figura e <b>digite</b> o nome da estrutura correspondente a cada número.</li>
+      <li>Use o <b>banco de palavras</b> em verde como apoio (há exatamente uma palavra para cada número).</li>
+      <li>Ao terminar, clique em <b>Imprimir / Salvar em PDF</b> para entregar com as respostas.</li>
+    </ul>
+  </div>
+
+  <!-- ============ 1. NEURÔNIO ============ -->
+  <section>
+    <div class="tema"><div class="num">1</div><h3>O neurônio e suas partes</h3></div>
+    <p class="instr">Nomeie as estruturas indicadas no esquema do neurônio.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 760 300" role="img" aria-label="Esquema de um neurônio">
+        <g stroke="#C98BB0" stroke-width="4" fill="none" stroke-linecap="round">
+          <path d="M150,150 C110,110 90,90 55,70"/>
+          <path d="M60,70 C70,80 66,96 50,100"/>
+          <path d="M55,70 C40,60 30,55 20,58"/>
+          <path d="M150,150 C110,150 90,150 55,150"/>
+          <path d="M55,150 C40,140 30,138 22,135"/>
+          <path d="M55,150 C40,160 30,162 22,166"/>
+          <path d="M150,150 C110,190 90,210 55,230"/>
+          <path d="M55,230 C45,222 34,222 26,224"/>
+          <path d="M55,230 C50,244 42,250 34,252"/>
+        </g>
+        <ellipse cx="185" cy="150" rx="52" ry="46" fill="#F3B6D1" stroke="#E5185F" stroke-width="3"/>
+        <circle cx="185" cy="150" r="20" fill="#E5185F"/>
+        <circle cx="185" cy="150" r="8" fill="#8d0f3b"/>
+        <line x1="235" y1="150" x2="690" y2="150" stroke="#9aa0b4" stroke-width="7" stroke-linecap="round"/>
+        <g fill="#F6D98A" stroke="#C9A33B" stroke-width="2">
+          <rect x="300" y="137" width="70" height="26" rx="12"/>
+          <rect x="400" y="137" width="70" height="26" rx="12"/>
+          <rect x="500" y="137" width="70" height="26" rx="12"/>
+        </g>
+        <g stroke="#9aa0b4" stroke-width="5" fill="none" stroke-linecap="round">
+          <path d="M690,150 C715,140 725,130 735,120"/>
+          <path d="M690,150 C715,150 725,150 738,150"/>
+          <path d="M690,150 C715,160 725,170 735,180"/>
+          <path d="M735,120 C742,116 748,118 752,122"/>
+          <path d="M738,150 C745,146 750,150 754,152"/>
+          <path d="M735,180 C742,178 748,182 752,186"/>
+        </g>
+
+        <line class="lead" x1="80" y1="95" x2="120" y2="60"/>
+        <circle class="dot" cx="120" cy="60" r="13"/><text class="lbl lbl-c" x="120" y="65" text-anchor="middle">1</text>
+        <line class="lead" x1="185" y1="104" x2="185" y2="60"/>
+        <circle class="dot" cx="185" cy="48" r="13"/><text class="lbl lbl-c" x="185" y="53" text-anchor="middle">2</text>
+        <line class="lead" x1="210" y1="130" x2="250" y2="95"/>
+        <circle class="dot" cx="250" cy="83" r="13"/><text class="lbl lbl-c" x="250" y="88" text-anchor="middle">3</text>
+        <line class="lead" x1="345" y1="150" x2="345" y2="230"/>
+        <circle class="dot" cx="345" cy="242" r="13"/><text class="lbl lbl-c" x="345" y="247" text-anchor="middle">4</text>
+        <line class="lead" x1="435" y1="137" x2="435" y2="95"/>
+        <circle class="dot" cx="435" cy="83" r="13"/><text class="lbl lbl-c" x="435" y="88" text-anchor="middle">5</text>
+        <line class="lead" x1="485" y1="150" x2="485" y2="230"/>
+        <circle class="dot" cx="485" cy="242" r="13"/><text class="lbl lbl-c" x="485" y="247" text-anchor="middle">6</text>
+        <line class="lead" x1="735" y1="120" x2="705" y2="80"/>
+        <circle class="dot" cx="705" cy="68" r="13"/><text class="lbl lbl-c" x="705" y="73" text-anchor="middle">7</text>
+      </svg>
+      <div class="legenda-fig">Figura 1 — Esquema de um neurônio (ilustração didática).</div>
+    </div>
+
+    <div class="respostas">
+      <div class="item"><span class="bolinha">1</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">2</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">3</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">4</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">5</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">6</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">7</span><input class="in" type="text"></div>
+    </div>
+    <div class="banco"><b>Banco:</b> axônio • bainha de mielina • corpo celular • dendritos • núcleo • nó de Ranvier • terminais do axônio</div>
+
+    <div class="pergunta">
+      <p class="en"><span class="qid">1.a</span> Qual estrutura é a parte <b>receptora</b> e qual é a parte que <b>transmite</b> o impulso para outras células?</p>
+      <textarea class="in"></textarea>
+    </div>
+  </section>
+
+  <!-- ============ 2. LOBOS CEREBRAIS ============ -->
+  <section class="quebra">
+    <div class="tema"><div class="num">2</div><h3>Lobos cerebrais</h3></div>
+    <p class="instr">Identifique os quatro lobos do cérebro, o cerebelo e o tronco encefálico (vista lateral).</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 420" role="img" aria-label="Vista lateral do cérebro com lobos">
+        <path d="M120,210 C110,120 190,55 300,55 C410,55 500,70 560,120
+                 C610,160 615,210 585,245 C600,255 600,275 580,282
+                 C560,350 470,375 380,370 C360,392 300,392 285,368
+                 C200,360 140,310 120,250 Z"
+              fill="#fde9f1" stroke="#E5185F" stroke-width="3"/>
+        <path d="M120,210 C110,120 190,55 300,55 C330,55 356,58 380,64 L360,230 L150,250 C132,243 124,228 120,210 Z"
+              fill="#9EC9F0" opacity="0.75"/>
+        <path d="M380,64 C440,74 500,88 540,116 L520,205 L360,230 Z" fill="#F6D98A" opacity="0.8"/>
+        <path d="M540,116 C590,150 612,205 585,245 L520,250 L520,205 Z" fill="#B7E0C4" opacity="0.85"/>
+        <path d="M150,250 L360,230 L520,250 C520,300 470,345 380,352 C320,340 230,330 180,300 C165,288 155,270 150,250 Z"
+              fill="#D9BDEC" opacity="0.75"/>
+        <g stroke="#E5185F" stroke-width="1.3" fill="none" opacity="0.4">
+          <path d="M200,110 C230,140 215,170 250,185"/>
+          <path d="M300,90 C320,130 300,160 330,190"/>
+          <path d="M420,100 C440,140 420,170 450,195"/>
+        </g>
+        <path d="M520,250 C560,250 600,270 605,310 C608,345 575,368 530,362 C500,358 485,330 500,300 C508,282 510,262 520,250 Z"
+              fill="#F3B6D1" stroke="#E5185F" stroke-width="2.5"/>
+        <g stroke="#E5185F" stroke-width="1" opacity=".5" fill="none">
+          <path d="M520,268 C555,270 585,285 592,312"/>
+          <path d="M512,290 C548,292 578,305 588,330"/>
+        </g>
+        <path d="M470,352 C480,380 486,405 500,418 L540,415 C530,392 528,372 528,358 Z"
+              fill="#F6C9A0" stroke="#C9823B" stroke-width="2.5"/>
+
+        <circle class="dot" cx="230" cy="150" r="14"/><text class="lbl lbl-c" x="230" y="155" text-anchor="middle">1</text>
+        <circle class="dot" cx="440" cy="140" r="14"/><text class="lbl lbl-c" x="440" y="145" text-anchor="middle">2</text>
+        <circle class="dot" cx="555" cy="195" r="14"/><text class="lbl lbl-c" x="555" y="200" text-anchor="middle">3</text>
+        <circle class="dot" cx="320" cy="290" r="14"/><text class="lbl lbl-c" x="320" y="295" text-anchor="middle">4</text>
+        <circle class="dot" cx="560" cy="312" r="14"/><text class="lbl lbl-c" x="560" y="317" text-anchor="middle">5</text>
+        <circle class="dot" cx="515" cy="400" r="14"/><text class="lbl lbl-c" x="515" y="405" text-anchor="middle">6</text>
+      </svg>
+      <div class="legenda-fig">Figura 2 — Vista lateral do encéfalo (cores apenas para distinguir as regiões).</div>
+    </div>
+
+    <div class="respostas">
+      <div class="item"><span class="bolinha">1</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">2</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">3</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">4</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">5</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">6</span><input class="in" type="text"></div>
+    </div>
+    <div class="banco"><b>Banco:</b> lobo frontal • lobo parietal • lobo occipital • lobo temporal • cerebelo • tronco encefálico</div>
+
+    <div class="pergunta">
+      <p class="en"><span class="qid">2.a</span> Agora associe cada lobo (números 1 a 4) à sua função principal:</p>
+      <table class="assoc">
+        <tr><td class="colA"><b>visão e reconhecimento de forma e cor</b></td><td>nº <input class="in mini" type="text"> — nome: <input class="in med" type="text"></td></tr>
+        <tr><td class="colA"><b>personalidade, motricidade e fala</b></td><td>nº <input class="in mini" type="text"> — nome: <input class="in med" type="text"></td></tr>
+        <tr><td class="colA"><b>audição e compreensão da linguagem</b></td><td>nº <input class="in mini" type="text"> — nome: <input class="in med" type="text"></td></tr>
+        <tr><td class="colA"><b>leitura e sensibilidade</b></td><td>nº <input class="in mini" type="text"> — nome: <input class="in med" type="text"></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 3. ENCÉFALO EM CORTE ============ -->
+  <section class="quebra">
+    <div class="tema"><div class="num">3</div><h3>Encéfalo em corte (vista medial)</h3></div>
+    <p class="instr">Nomeie as grandes porções do encéfalo e a estrutura que o continua para baixo.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 430" role="img" aria-label="Corte medial do encéfalo">
+        <path d="M90,210 C80,110 180,45 320,45 C470,45 560,110 560,185
+                 C560,215 545,235 520,245 L300,250 L130,250 C105,245 92,230 90,210 Z"
+              fill="#9EC9F0" stroke="#23366F" stroke-width="3"/>
+        <g stroke="#23366F" stroke-width="1.2" fill="none" opacity=".4">
+          <path d="M150,110 C180,140 160,165 190,180"/>
+          <path d="M250,80 C275,120 255,150 285,170"/>
+          <path d="M360,80 C385,120 365,150 395,175"/>
+          <path d="M460,100 C480,135 462,160 488,185"/>
+        </g>
+        <ellipse cx="330" cy="215" rx="70" ry="40" fill="#F6D98A" stroke="#C9A33B" stroke-width="2.5"/>
+        <path d="M300,250 L380,250 C375,290 372,320 362,345 L330,352 C318,330 312,300 300,250 Z"
+              fill="#F6C9A0" stroke="#C9823B" stroke-width="2.5"/>
+        <line x1="310" y1="285" x2="372" y2="283" stroke="#C9823B" stroke-width="1.5"/>
+        <line x1="316" y1="315" x2="366" y2="313" stroke="#C9823B" stroke-width="1.5"/>
+        <path d="M380,250 C460,245 540,275 545,330 C548,375 495,398 435,388 C395,381 372,350 380,310 C384,286 380,266 380,250 Z"
+              fill="#F3B6D1" stroke="#E5185F" stroke-width="2.5"/>
+        <g stroke="#E5185F" stroke-width="1" opacity=".5" fill="none">
+          <path d="M400,275 C455,275 505,292 515,330"/>
+          <path d="M392,300 C450,300 500,315 512,350"/>
+          <path d="M395,325 C448,325 495,338 508,365"/>
+        </g>
+        <path d="M330,352 L362,345 C360,380 358,405 356,425 L336,425 C334,405 332,378 330,352 Z"
+              fill="#C8CEDD" stroke="#23366F" stroke-width="2.5"/>
+
+        <circle class="dot" cx="200" cy="150" r="14"/><text class="lbl lbl-c" x="200" y="155" text-anchor="middle">1</text>
+        <circle class="dot" cx="330" cy="215" r="14"/><text class="lbl lbl-c" x="330" y="220" text-anchor="middle">2</text>
+        <circle class="dot" cx="330" cy="300" r="14"/><text class="lbl lbl-c" x="330" y="305" text-anchor="middle">3</text>
+        <circle class="dot" cx="470" cy="330" r="14"/><text class="lbl lbl-c" x="470" y="335" text-anchor="middle">4</text>
+        <circle class="dot" cx="346" cy="400" r="14"/><text class="lbl lbl-c" x="346" y="405" text-anchor="middle">5</text>
+      </svg>
+      <div class="legenda-fig">Figura 3 — Corte medial do encéfalo e início da medula.</div>
+    </div>
+
+    <div class="respostas">
+      <div class="item"><span class="bolinha">1</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">2</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">3</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">4</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">5</span><input class="in" type="text"></div>
+    </div>
+    <div class="banco"><b>Banco:</b> telencéfalo (cérebro) • diencéfalo • tronco encefálico • cerebelo • medula espinhal</div>
+
+    <div class="pergunta">
+      <p class="en"><span class="qid">3.a</span> O tronco encefálico (nº 3) é formado por três partes. Cite-as e indique a que controla a respiração e a frequência cardíaca.</p>
+      <textarea class="in"></textarea>
+    </div>
+  </section>
+
+  <!-- ============ 4. MEDULA EM CORTE ============ -->
+  <section class="quebra">
+    <div class="tema"><div class="num">4</div><h3>Medula espinhal em corte transversal</h3></div>
+    <p class="instr">Observe o corte da medula (a substância cinzenta tem forma de "H") e nomeie as estruturas.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 640 420" role="img" aria-label="Corte transversal da medula espinhal">
+        <path d="M320,40 C430,40 510,120 510,230 C510,320 440,380 320,380
+                 C200,380 130,320 130,230 C130,120 210,40 320,40 Z"
+              fill="#EEF2FB" stroke="#23366F" stroke-width="3"/>
+        <path d="M250,120 C230,118 215,140 230,160 C215,180 215,210 230,230
+                 L240,290 C235,320 265,330 285,315 L300,250 L340,250 L355,315
+                 C375,330 405,320 400,290 L410,230 C425,210 425,180 410,160
+                 C425,140 410,118 390,120 L355,160 L340,205 L300,205 L285,160 Z"
+              fill="#B9BFD0" stroke="#5a6485" stroke-width="2"/>
+        <circle cx="320" cy="215" r="9" fill="#fff" stroke="#5a6485" stroke-width="2"/>
+        <path d="M235,135 C180,110 140,105 95,110" stroke="#2E9E5B" stroke-width="5" fill="none"/>
+        <ellipse cx="95" cy="110" rx="20" ry="13" fill="#B7E0C4" stroke="#2E9E5B" stroke-width="2"/>
+        <path d="M255,300 C190,330 150,340 100,342" stroke="#E5185F" stroke-width="5" fill="none"/>
+
+        <line class="lead" x1="270" y1="140" x2="310" y2="90"/>
+        <circle class="dot" cx="310" cy="78" r="14"/><text class="lbl lbl-c" x="310" y="83" text-anchor="middle">1</text>
+        <line class="lead" x1="285" y1="300" x2="245" y2="360"/>
+        <circle class="dot" cx="245" cy="372" r="14"/><text class="lbl lbl-c" x="245" y="377" text-anchor="middle">2</text>
+        <line class="lead" x1="470" y1="150" x2="520" y2="110"/>
+        <circle class="dot" cx="533" cy="100" r="14"/><text class="lbl lbl-c" x="533" y="105" text-anchor="middle">3</text>
+        <line class="lead" x1="400" y1="250" x2="470" y2="275"/>
+        <circle class="dot" cx="485" cy="280" r="14"/><text class="lbl lbl-c" x="485" y="285" text-anchor="middle">4</text>
+        <line class="lead" x1="329" y1="215" x2="420" y2="200"/>
+        <circle class="dot" cx="435" cy="198" r="14"/><text class="lbl lbl-c" x="435" y="203" text-anchor="middle">5</text>
+        <circle class="dot" cx="95" cy="80" r="14"/><text class="lbl lbl-c" x="95" y="85" text-anchor="middle">6</text>
+        <line class="lead" x1="95" y1="94" x2="95" y2="97"/>
+      </svg>
+      <div class="legenda-fig">Figura 4 — Corte transversal da medula (verde = raiz dorsal/sensitiva; rosa = raiz ventral/motora).</div>
+    </div>
+
+    <div class="respostas">
+      <div class="item"><span class="bolinha">1</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">2</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">3</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">4</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">5</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">6</span><input class="in" type="text"></div>
+    </div>
+    <div class="banco"><b>Banco:</b> corno posterior • corno anterior • substância branca • substância cinzenta • canal central • gânglio da raiz dorsal</div>
+
+    <div class="pergunta">
+      <p class="en"><span class="qid">4.a</span> O corno <b>posterior</b> conduz impulso de que tipo? E o corno <b>anterior</b>?</p>
+      <textarea class="in"></textarea>
+    </div>
+  </section>
+
+  <!-- ============ 5. MENINGES ============ -->
+  <section class="quebra">
+    <div class="tema"><div class="num">5</div><h3>Proteção: as meninges</h3></div>
+    <p class="instr">A figura mostra as camadas de proteção, do osso até o tecido nervoso. Nomeie cada uma.</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 700 320" role="img" aria-label="Camadas das meninges">
+        <path d="M60,300 C60,120 250,40 350,40 C450,40 640,120 640,300 L600,300 C600,150 440,80 350,80 C260,80 100,150 100,300 Z"
+              fill="#E7DCC9" stroke="#9c8456" stroke-width="2"/>
+        <path d="M100,300 C100,160 255,100 350,100 C445,100 600,160 600,300 L562,300 C562,185 435,135 350,135 C265,135 138,185 138,300 Z"
+              fill="#C8CEDD" stroke="#23366F" stroke-width="2"/>
+        <path d="M138,300 C138,195 262,153 350,153 C438,153 562,195 562,300 L528,300 C528,220 428,185 350,185 C272,185 172,220 172,300 Z"
+              fill="#D9BDEC" stroke="#7a4fa0" stroke-width="2"/>
+        <path d="M172,300 C172,228 268,200 350,200 C432,200 528,228 528,300 L498,300 C498,250 420,228 350,228 C280,228 202,250 202,300 Z"
+              fill="#F3B6D1" stroke="#E5185F" stroke-width="2"/>
+        <path d="M202,300 C202,262 272,243 350,243 C428,243 498,262 498,300 Z"
+              fill="#9EC9F0" stroke="#23366F" stroke-width="2"/>
+
+        <circle class="dot" cx="80" cy="200" r="14"/><text class="lbl lbl-c" x="80" y="205" text-anchor="middle">1</text>
+        <circle class="dot" cx="120" cy="230" r="14"/><text class="lbl lbl-c" x="120" y="235" text-anchor="middle">2</text>
+        <circle class="dot" cx="156" cy="258" r="14"/><text class="lbl lbl-c" x="156" y="263" text-anchor="middle">3</text>
+        <circle class="dot" cx="190" cy="280" r="14"/><text class="lbl lbl-c" x="190" y="285" text-anchor="middle">4</text>
+        <circle class="dot" cx="350" cy="275" r="14"/><text class="lbl lbl-c" x="350" y="280" text-anchor="middle">5</text>
+      </svg>
+      <div class="legenda-fig">Figura 5 — Camadas de proteção do encéfalo (da mais externa para a mais interna).</div>
+    </div>
+
+    <div class="respostas">
+      <div class="item"><span class="bolinha">1</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">2</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">3</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">4</span><input class="in" type="text"></div>
+      <div class="item"><span class="bolinha">5</span><input class="in" type="text"></div>
+    </div>
+    <div class="banco"><b>Banco:</b> crânio (osso) • dura-máter • aracnoide • pia-máter • encéfalo (tecido nervoso)</div>
+
+    <div class="pergunta">
+      <p class="en"><span class="qid">5.a</span> Entre as meninges circula um líquido que amortece impactos. Qual é o nome dele e qual sua função?</p>
+      <textarea class="in"></textarea>
+    </div>
+  </section>
+
+  <footer>
+    Atividade com Imagens — Sistema Nervoso • Anatomia Humana (Aula 6) • Profª. Me. Dayanne Ayres<br>
+    Diagramas vetoriais (SVG) ilustrativos, elaborados para uso didático em sala.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY='atividade_imagens_sn_v1';
+  var saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+  var fields=document.querySelectorAll('input, textarea');
+  function persist(){ localStorage.setItem(KEY, JSON.stringify(saved)); }
+  fields.forEach(function(f,i){
+    var k='f'+i;
+    if(saved[k]!==undefined) f.value=saved[k];
+    f.addEventListener('input',function(){ saved[k]=f.value; persist(); });
+  });
+  window.limparRespostas=function(){
+    if(!confirm('Deseja apagar todas as respostas digitadas?')) return;
+    document.querySelectorAll('input, textarea').forEach(function(f){ f.value=''; });
+    saved={}; localStorage.removeItem(KEY);
+  };
+})();
+</script>
+</body>
+</html>
